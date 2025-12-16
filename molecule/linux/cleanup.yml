@@ -1,9 +1,9 @@
 ---
-- name: Cleanup
+- name: "== Cleanup == Task"
   hosts: all
   gather_facts: false
   tasks:
-    - name: Remove test artifacts
+    - name: "== Cleanup == Remove test artifacts"
       ansible.builtin.file:
         path: /tmp/molecule-test
         state: absent
