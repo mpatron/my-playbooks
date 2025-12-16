@@ -1,46 +1,84 @@
-# Myorg Myproject Ansible Project
+# Myproject Ansible Project avec molecule
 
-## Included content/ Directory Structure
+## Directory Structure
 
 The directory structure follows best practices recommended by the Ansible
 community. Feel free to customize this template according to your specific
 project requirements.
 
 ```shell
- ansible-project/
- |── .devcontainer/
- |    └── docker/
- |        └── devcontainer.json
- |    └── podman/
- |        └── devcontainer.json
- |    └── devcontainer.json
- |── .github/
- |    └── workflows/
- |        └── tests.yml
- |    └── ansible-code-bot.yml
- |── .vscode/
- |    └── extensions.json
- |── collections/
- |   └── requirements.yml
- |   └── ansible_collections/
- |       └── project_org/
- |           └── project_repo/
- |               └── README.md
- |               └── roles/sample_role/
- |                         └── README.md
- |                         └── tasks/main.yml
- |── inventory/
- |   |── hosts.yml
- |   |── argspec_validation_inventory.yml
- |   └── groups_vars/
- |   └── host_vars/
- |── ansible-navigator.yml
- |── ansible.cfg
- |── devfile.yaml
- |── linux_playbook.yml
- |── network_playbook.yml
- |── README.md
- |── site.yml
+ .
+├── AGENTS.md
+├── ansible.cfg
+├── ansible-navigator.yml
+├── argspec_validation_plays.meta.yml
+├── argspec_validation_plays.yml
+├── collections
+│   ├── ansible_collections
+│   │   └── myorg
+│   │       └── myproject
+│   │           ├── CHANGELOG.md
+│   │           ├── galaxy.yml
+│   │           ├── meta
+│   │           │   └── runtime.yml
+│   │           ├── README.md
+│   │           └── roles
+│   │               └── run
+│   │                   ├── README.md
+│   │                   └── tasks
+│   │                       └── main.yml
+│   └── requirements.yml
+├── devfile.yaml
+├── inventory
+│   ├── argspec_validation_inventory.yml
+│   ├── group_vars
+│   │   ├── all.yml
+│   │   ├── db_servers.yml
+│   │   ├── production.yml
+│   │   ├── test.yml
+│   │   └── web_servers.yml
+│   ├── hosts.yml
+│   └── host_vars
+│       ├── server1.yml
+│       ├── server2.yml
+│       ├── server3.yml
+│       ├── switch1.yml
+│       └── switch2.yml
+├── linux_playbook.yml
+├── molecule
+│   ├── linux
+│   │   ├── cleanup.yml
+│   │   ├── converge.yml
+│   │   ├── create.yml
+│   │   ├── dependency.yml
+│   │   ├── destroy.yml
+│   │   ├── inventory
+│   │   │   └── hosts.yml
+│   │   ├── molecule.yml
+│   │   ├── prepare.yml
+│   │   └── verify.yml
+│   ├── network
+│   │   ├── cleanup.yml
+│   │   ├── converge.yml
+│   │   ├── create.yml
+│   │   ├── destroy.yml
+│   │   ├── inventory.yml
+│   │   ├── molecule.yml
+│   │   └── verify.yml
+│   └── requirements.yml
+├── network_playbook.yml
+├── podman
+│   ├── almalinux
+│   ├── centos
+│   │   ├── Containerfile
+│   │   └── readme.md
+│   └── ubuntu
+│       ├── Containerfile
+│       └── readme.md
+├── README.md
+├── site.yml
+└── srv
+    └── httpd.j2
 ```
 
 ## Compatible with Ansible-lint
@@ -48,6 +86,7 @@ project requirements.
 Tested with ansible-lint >=24.2.0 releases and the current development version
 of ansible-core.
 
+~~~bash
 molecule test --scenario-name linux
 molecule destroy --scenario-name linux
 
@@ -55,3 +94,4 @@ clear && molecule reset --scenario-name linux --report --command-borders && mole
 
 podman run --name toto --privileged --cgroupsns=host -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker.io/library/fedora:latest bash
 podman run --name toto --rm --tty --interactive --privileged --cgroupns=host -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker.io/library/fedora:latest /bin/bash
+~~~
