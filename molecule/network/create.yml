@@ -1,0 +1,49 @@
+---
+- name: Create network device containers
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create container network
+      containers.podman.podman_network:
+        name: molecule-network-test
+        state: present
+
+    - name: Create EOS containers
+      containers.podman.podman_container:
+        name: "{{ hostvars[item].ansible_host }}"
+        image: "{{ hostvars[item].container_image }}"
+        privileged: "{{ hostvars[item].container_privileged }}"
+        state: started
+        network:
+          - molecule-network-test
+        ports:
+          - "2200:22"
+          - "2600:443"
+        volumes:
+          - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+        tmpfs:
+          - /tmp
+        command: /sbin/init
+        env: "{{ hostvars[item].container_env }}"
+        network_cli_ssh_type: paramiko
+      loop: "{{ groups['arista_switches'] }}"
+
+    - name: Wait for SSH to be available
+      ansible.builtin.wait_for:
+        host: "{{ hostvars[item].ansible_host }}"
+        port: 22
+        timeout: 300
+      loop: "{{ groups['arista_switches'] }}"
+
+    - name: Wait for EOS API to be ready
+      ansible.builtin.uri:
+        url: "https://{{ hostvars[item].ansible_host }}:443/command-api"
+        method: GET
+        validate_certs: false
+        timeout: 10
+      register: api_check
+      until: api_check.status == 200
+      retries: 30
+      delay: 10
+      loop: "{{ groups['arista_switches'] }}"
+      failed_when: false

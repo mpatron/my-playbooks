@@ -1,0 +1,12 @@
+---
+- name: Cleanup network configuration
+  hosts: arista_switches
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  tasks:
+    - name: Remove test configurations
+      arista.eos.eos_config:
+        lines:
+          - no interface Loopback99
+        backup: false
+      failed_when: false

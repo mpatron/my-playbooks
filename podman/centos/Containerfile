@@ -1,0 +1,22 @@
+FROM quay.io/centos/centos:stream9
+LABEL maintainer="Mickael Patron"
+
+# Installer systemd, rsyslog et sudo
+RUN dnf -y update \
+    && dnf -yqq install \
+       rsyslog systemd sudo \
+    && dnf clean all \
+    && rm -rf /usr/share/doc /usr/share/man /var/cache/dnf
+
+# Désactiver imklog dans rsyslog
+RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
+
+# Supprimer certains services inutiles dans un conteneur
+RUN rm -rf /usr/lib/systemd/system/systemd*udev* \
+  && rm -rf /usr/lib/systemd/system/getty.target
+
+# Monter les volumes nécessaires à systemd
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
+
+# Lancer systemd comme PID 1
+CMD ["/usr/sbin/init"]

@@ -1,0 +1,17 @@
+---
+- name: Destroy network device containers
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Remove EOS containers
+      containers.podman.podman_container:
+        name: "{{ hostvars[item].ansible_host }}"
+        state: absent
+      loop: "{{ groups['arista_switches'] }}"
+      failed_when: false
+
+    - name: Remove container network
+      containers.podman.podman_network:
+        name: molecule-network-test
+        state: absent
+      failed_when: false

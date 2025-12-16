@@ -1,0 +1,36 @@
+---
+- name: Update web servers
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Ensure apache is at the present version
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+
+    - name: Write the apache config file
+      ansible.builtin.template:
+        src: srv/httpd.j2
+        dest: /etc/httpd2.conf
+        mode: "0644"
+
+- name: Update db servers
+  hosts: databases
+  become: true
+
+  tasks:
+    - name: Ensure postgresql is at the present version
+      ansible.builtin.dnf:
+        name: postgresql-server
+        state: present
+    - name: Initialiser le cluster PostgreSQL
+      ansible.builtin.command: /usr/bin/postgresql-setup --initdb
+      args:
+        creates: /var/lib/pgsql/data/PG_VERSION
+    - name: Ensure that postgresql is started
+      ansible.builtin.systemd:
+        name: postgresql
+        state: started
+        enabled: true
+

@@ -1,0 +1,23 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: ../requirements.yml
+
+ansible:
+  cfg:
+    defaults:
+      collections_path: collections
+      inventory: inventory/hosts.yml
+      host_key_checking: false
+
+scenario:
+  name: network
+  description: Test against network devices
+  test_sequence:
+    - dependency
+    - create
+    - converge
+    - verify
+    - cleanup
+    - destroy

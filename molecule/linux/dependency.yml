@@ -1,0 +1,12 @@
+---
+- name: Dependency
+  hosts: all
+  gather_facts: false
+  tasks: # []
+    - name: "== Create == Afficher le chemin du scénario"
+      ansible.builtin.debug:
+        msg: "Scénario en cours : {{ molecule_scenario_directory }}"
+
+    - name: "== Create == Lire la config Molecule"
+      ansible.builtin.debug:
+        var: molecule_yml.driver.name

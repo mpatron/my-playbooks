@@ -1,0 +1,19 @@
+---
+all:
+  children:
+    arista_switches:
+      hosts:
+        eos-switch-01:
+          ansible_host: eos-switch-01
+          ansible_network_os: eos
+          ansible_user: admin
+          ansible_password: admin
+          ansible_connection: ansible.netcommon.network_cli
+          container_image: ceos:latest
+          container_privileged: true
+          container_env:
+            CEOS: 1
+            EOS_PLATFORM: ceoslab
+            container: docker
+      vars:
+        ansible_python_interpreter: "{{ ansible_playbook_python }}"

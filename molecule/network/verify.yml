@@ -1,0 +1,29 @@
+---
+- name: Verify network devices
+  hosts: arista_switches
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  tasks:
+    - name: Get EOS version
+      arista.eos.eos_command:
+        commands:
+          - show version
+      register: version_output
+
+    - name: Verify EOS version contains expected info
+      ansible.builtin.assert:
+        that:
+          - "'Arista' in version_output.stdout[0]"
+        fail_msg: "EOS version check failed"
+
+    - name: Gather EOS facts
+      arista.eos.eos_facts:
+        gather_subset: min
+      register: eos_facts
+
+    - name: Verify system facts
+      ansible.builtin.assert:
+        that:
+          - eos_facts.ansible_facts.ansible_net_version is defined
+          - eos_facts.ansible_facts.ansible_net_hostname is defined
+        fail_msg: "Required EOS facts not available"
