@@ -6,7 +6,7 @@ The directory structure follows best practices recommended by the Ansible
 community. Feel free to customize this template according to your specific
 project requirements.
 
-```shell
+~~~shell
  .
 ├── AGENTS.md
 ├── ansible.cfg
@@ -79,7 +79,7 @@ project requirements.
 ├── site.yml
 └── srv
     └── httpd.j2
-```
+~~~
 
 ## Compatible with Ansible-lint
 
@@ -87,11 +87,15 @@ Tested with ansible-lint >=24.2.0 releases and the current development version
 of ansible-core.
 
 ~~~bash
+podman build -t podman-centos-systemd:stream9 -t podman-centos-systemd:latest .
+
 molecule test --scenario-name linux
+
 molecule destroy --scenario-name linux
 
 clear && molecule reset --scenario-name linux --report --command-borders && molecule test --scenario-name linux --report --command-borders
 
-podman run --name toto --privileged --cgroupsns=host -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker.io/library/fedora:latest bash
-podman run --name toto --rm --tty --interactive --privileged --cgroupns=host -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker.io/library/fedora:latest /bin/bash
+# Debug image conatainer
+podman run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --name mycentos localhost/podman-centos-systemd:latest
+podman exec -it mycentos bash
 ~~~
