@@ -1,19 +1,19 @@
 ---
-- name: Verify
+- name: "== Verify == Task"
   hosts: all
   gather_facts: true
   tasks:
-    - name: Check required packages are installed
+    - name: "== Verify == Check required packages are installed"
       ansible.builtin.package_facts:
         manager: auto
 
-    - name: Verify python3 is installed
+    - name: "== Verify == Verify python3 is installed"
       ansible.builtin.assert:
         that:
           - "'python3' in ansible_facts.packages"
         fail_msg: "Python3 package not found"
 
-    - name: Verify systemd service is running
+    - name: "== Verify == Verify systemd service is running"
       ansible.builtin.systemd:
         name: systemd-logind
         state: started
@@ -21,7 +21,7 @@
       register: systemd_check
       failed_when: false
 
-    - name: Assert systemd is active
+    - name: "== Verify == Assert systemd is active"
       ansible.builtin.assert:
         that:
           - systemd_check is not failed

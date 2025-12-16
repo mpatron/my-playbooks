@@ -1,16 +1,16 @@
 ---
-- name: Destroy container instances
+- name: "== Destroy == Destroy container instances"
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Remove test containers
+    - name: "== Destroy == Remove test containers"
       containers.podman.podman_container:
         name: "{{ hostvars[item].ansible_host }}"
         state: absent
       loop: "{{ groups['all'] }}"
       failed_when: false
 
-    - name: Remove container network
+    - name: "== Destroy == Remove container network"
       containers.podman.podman_network:
         name: molecule-linux-test
         state: absent

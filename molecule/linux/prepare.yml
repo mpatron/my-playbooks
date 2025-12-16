@@ -1,10 +1,10 @@
 ---
-- name: Prepare container instances
+- name: "== Prepare == Prepare container instances"
   hosts: all
   gather_facts: false
   become: false
   tasks:
-    - name: Install required packages
+    - name: "== Prepare == Install required packages"
       ansible.builtin.dnf:
         name: "{{ required_packages }}"
         state: present
