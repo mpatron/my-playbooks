@@ -1,16 +1,16 @@
-FROM quay.io/centos/centos:stream9
+FROM docker.io/almalinux:10
 LABEL org.opencontainers.image.authors="Mickael Patron"
 LABEL org.opencontainers.image.source="https://github.com/mpatron/my-playbooks"
-LABEL org.opencontainers.image.path="podman/centos/Containerfile"
-LABEL org.opencontainers.image.title="podman-centos-systemd"
-LABEL org.opencontainers.image.description="Centos9 Stream image with systemd for Podman containers and Ansible with molecule testing"
+LABEL org.opencontainers.image.path="podman/almalinux/Containerfile"
+LABEL org.opencontainers.image.title="podman-almalinux-systemd"
+LABEL org.opencontainers.image.description="almalinux9 Stream image with systemd for Podman containers and Ansible with molecule testing"
 LABEL org.opencontainers.image.version="1.0.0"
-LABEL org.opencontainers.image.url="https://github.com/mpatron/my-playbooks/podman/centos/Containerfile"
+LABEL org.opencontainers.image.url="https://github.com/mpatron/my-playbooks/podman/almalinux/Containerfile"
 LABEL org.opencontainers.image.vendor="JObjects.org"
 LABEL org.opencontainers.image.created="2025-12-17T00:00:00Z"
 LABEL org.opencontainers.image.revision="1.0.0"
 LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.documentation="https://github.com/mpatron/my-playbooks/podman/centos/readme.md"
+LABEL org.opencontainers.image.documentation="https://github.com/mpatron/my-playbooks/podman/almalinux/readme.md"
 
 
 # Installer systemd, rsyslog et sudo

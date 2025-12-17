@@ -1,5 +1,17 @@
 FROM ubuntu:24.04
-LABEL maintainer="Mickael Patron"
+LABEL org.opencontainers.image.authors="Mickael Patron"
+LABEL org.opencontainers.image.source="https://github.com/mpatron/my-playbooks"
+LABEL org.opencontainers.image.path="podman/ubuntu/Containerfile"
+LABEL org.opencontainers.image.title="podman-ubuntu-systemd"
+LABEL org.opencontainers.image.description="ubuntu9 Stream image with systemd for Podman containers and Ansible with molecule testing"
+LABEL org.opencontainers.image.version="1.0.0"
+LABEL org.opencontainers.image.url="https://github.com/mpatron/my-playbooks/podman/ubuntu/Containerfile"
+LABEL org.opencontainers.image.vendor="JObjects.org"
+LABEL org.opencontainers.image.created="2025-12-17T00:00:00Z"
+LABEL org.opencontainers.image.revision="1.0.0"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.documentation="https://github.com/mpatron/my-playbooks/podman/ubuntu/readme.md"
+
 
 ARG DEBIAN_FRONTEND=noninteractive
 
