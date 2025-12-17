@@ -20,6 +20,9 @@
       containers.podman.podman_container:
         name: "{{ hostvars[item].ansible_host }}"
         image: "{{ hostvars[item].container_image }}"
+        # command: doit être commenté pour que systemd fonctionne correctement
+        # Biensur, on pourrait aussi le mettre  pour faire des tests qui ne 
+        # nécessite pas systemd.
         # command: "{{ hostvars[item].container_command }}"
         privileged: "{{ hostvars[item].container_privileged }}"
         state: started
