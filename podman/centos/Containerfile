@@ -19,4 +19,4 @@ RUN rm -rf /usr/lib/systemd/system/systemd*udev* \
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
 # Lancer systemd comme PID 1
-CMD ["/usr/sbin/init"]
+CMD ["/lib/systemd/systemd"]
